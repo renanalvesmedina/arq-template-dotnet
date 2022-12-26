@@ -1,0 +1,30 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: RepoNameTemplate-solution
+  tags:
+    - dotnet
+  annotations:
+    backstage.io/techdocs-ref: dir:..
+    dev.azure.com/project-repo: global-platform/RepoNameTemplate
+    sonarqube.org/project-key: RepoNameTemplate
+    superdigital/domain: DomainTemplate
+    superdigital/domain-prefix: DomainPrefixTemplate
+    superdigital/k8s-namespace: K8sNamespaceTemplate
+    superdigital/fortify-app: FortifyAppTemplate
+spec:
+  type: solution
+  lifecycle: production
+  owner: TeamTemplate
+  system: SystemTemplate
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: RepoNameTemplate-solution-data
+spec:
+  targets:
+    - /src/EntrypointFullNamespace/catalog-info.yaml
+#if (IsWebApi)
+    - /src/libs/EntrypointFullNamespace.Client/catalog-info.yaml
+#endif

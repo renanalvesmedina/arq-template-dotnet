@@ -1,0 +1,1016 @@
+{
+    "source": "restApi",
+    "isDeleted": false,
+    "variables": {
+        "build_args": {
+            "value": ""
+        },
+        "namespace": {
+            "value": "K8sNamespaceTemplate"
+        },
+        "oc_project": {
+            "value": "$(namespace)"
+        },
+        "release_name": {
+            "value": "$(service_name)"
+        },
+        "service_name": {
+            "value": "AppNameTemplate"
+        }
+    },
+    "variableGroups": [],
+    "environments": [
+        {
+            "id": 3820,
+            "name": "DEV AKS PAGONXT",
+            "rank": 1,
+            "owner": {
+                "displayName": "Alef Carlos Nunes da Silva",
+                "url": "https://spsprodcus1.vssps.visualstudio.com/A1daf8918-7cb3-4770-8d8f-ed31c40d3a7f/_apis/Identities/7a1eb01f-6b33-4e32-9f55-be1ca1bdeb7d",
+                "_links": {
+                    "avatar": {
+                        "href": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw"
+                    }
+                },
+                "id": "7a1eb01f-6b33-4e32-9f55-be1ca1bdeb7d",
+                "uniqueName": "alef.silva@superdigital.com.br",
+                "imageUrl": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw",
+                "descriptor": "aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw"
+            },
+            "variables": {
+                "openshift_enabled": {
+                    "value": "false"
+                }
+            },
+            "variableGroups": [
+                124
+            ],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 14204
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "beforeGates"
+                }
+            },
+            "deployStep": {
+                "id": 14209
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 14210
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "afterSuccessfulGates"
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 27,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": "agentBasedDeployment",
+                    "name": "Helm",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "e06347d1-d512-4d03-bdc8-d935a4c3a152",
+                            "version": "1.*",
+                            "name": "Helm Install",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "chart_path": "**/helm/$(service_name)",
+                                "env_tag": "$(env_tag)",
+                                "helm_values": "$(helm_values)",
+                                "namespace": "$(namespace)",
+                                "release_name": "$(service_name)"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "52a1fb53-71f9-4bf7-a9d6-5c2a16896375",
+                            "version": "1.*",
+                            "name": "Update UserStory/Bug Status",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "workItemStateToChange": "",
+                                "workItemCurrentState": "In Development,Ready for Dev",
+                                "addTags": "IN-DEV",
+                                "removeTags": "IN-PRE-PROD\nIN-PROD",
+                                "enableBugUpdate": "true",
+                                "workItemStateBug": "",
+                                "bugCurrentState": "Active,Resolved",
+                                "addTagsBug": "IN-DEV",
+                                "removeTagsBug": "IN-PRE-PROD\nIN-PROD",
+                                "enableTaskUpdate": "",
+                                "workItemStateTask": "",
+                                "taskCurrentState": "",
+                                "addTagsTask": "",
+                                "removeTagsTask": "",
+                                "enableTagAll": "",
+                                "addTagsAll": "",
+                                "removeTagsAll": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": true,
+                "autoLinkWorkItems": true,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "ReleaseStarted",
+                    "conditionType": "event",
+                    "value": ""
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 1,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 0,
+                "url": "https://vsrm.dev.azure.com/Superdigital-HoldCo/cc606d06-3b09-48d7-9a99-d9c5ee1334b5/_apis/Release/releases/0",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {
+                "BoardsEnvironmentType": {
+                    "$type": "System.String",
+                    "$value": "unmapped"
+                },
+                "LinkBoardsWorkItems": {
+                    "$type": "System.String",
+                    "$value": "True"
+                }
+            },
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [
+                {
+                    "releaseDefinitionId": 686,
+                    "definitionEnvironmentId": 3820,
+                    "triggerType": "rollbackRedeploy",
+                    "triggerContent": "{\"action\":\"LatestSuccessfulDeployment\",\"eventTypes\":[\"MS.TF.DistributedTask.DeploymentFailed\"]}"
+                }
+            ]
+        },
+        {
+            "id": 3821,
+            "name": "PRE-PROD AKS PAGONXT",
+            "rank": 3,
+            "owner": {
+                "displayName": "Alef Carlos Nunes da Silva",
+                "url": "https://spsprodcus1.vssps.visualstudio.com/A1daf8918-7cb3-4770-8d8f-ed31c40d3a7f/_apis/Identities/7a1eb01f-6b33-4e32-9f55-be1ca1bdeb7d",
+                "_links": {
+                    "avatar": {
+                        "href": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw"
+                    }
+                },
+                "id": "7a1eb01f-6b33-4e32-9f55-be1ca1bdeb7d",
+                "uniqueName": "alef.silva@superdigital.com.br",
+                "imageUrl": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw",
+                "descriptor": "aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw"
+            },
+            "variables": {
+                "openshift_enabled": {
+                    "value": "false"
+                }
+            },
+            "variableGroups": [
+                125
+            ],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 14217
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "beforeGates"
+                }
+            },
+            "deployStep": {
+                "id": 14208
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 14211
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "afterSuccessfulGates"
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 46,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": "agentBasedDeployment",
+                    "name": "Docker",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "731cbe40-eff7-4296-b760-78b829b5454f",
+                            "version": "1.*",
+                            "name": "Push Image to PreProduction",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "image_name": "$(service_name)",
+                                "image_tag": "$(Build.BuildId)",
+                                "oc_project": "$(oc_project)"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 73,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 2,
+                    "phaseType": "agentBasedDeployment",
+                    "name": "Helm",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "1c9f6c32-37fa-4402-b0d4-a4e9b62d9eef",
+                            "version": "1.*",
+                            "name": "Helm Install",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "chart_path": "**/helm/$(service_name)",
+                                "env_tag": "$(env_tag)",
+                                "helm_values": "$(helm_values)",
+                                "namespace": "$(namespace)",
+                                "release_name": "$(service_name)"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "52a1fb53-71f9-4bf7-a9d6-5c2a16896375",
+                            "version": "1.*",
+                            "name": "Update UserStory/Bug Status",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "workItemStateToChange": "Ready for Demo",
+                                "workItemCurrentState": "In Testing,Ready for Testing",
+                                "addTags": "IN-PRE-PROD",
+                                "removeTags": "IN-DEV\nIN-PROD",
+                                "enableBugUpdate": "true",
+                                "workItemStateBug": "",
+                                "bugCurrentState": "Closed",
+                                "addTagsBug": "IN-PRE-PROD",
+                                "removeTagsBug": "IN-DEV\nIN-PROD",
+                                "enableTaskUpdate": "",
+                                "workItemStateTask": "",
+                                "taskCurrentState": "",
+                                "addTagsTask": "",
+                                "removeTagsTask": "",
+                                "enableTagAll": "",
+                                "addTagsAll": "",
+                                "removeTagsAll": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": true,
+                "autoLinkWorkItems": true,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "QA AKS PAGONXT",
+                    "conditionType": "environmentState",
+                    "value": "4"
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 1,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 0,
+                "url": "https://vsrm.dev.azure.com/Superdigital-HoldCo/cc606d06-3b09-48d7-9a99-d9c5ee1334b5/_apis/Release/releases/0",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {
+                "BoardsEnvironmentType": {
+                    "$type": "System.String",
+                    "$value": "production"
+                },
+                "LinkBoardsWorkItems": {
+                    "$type": "System.String",
+                    "$value": "True"
+                }
+            },
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": []
+        },
+        {
+            "id": 3822,
+            "name": "PROD AKS PAGONXT",
+            "rank": 4,
+            "owner": {
+                "displayName": "Alef Carlos Nunes da Silva",
+                "url": "https://spsprodcus1.vssps.visualstudio.com/A1daf8918-7cb3-4770-8d8f-ed31c40d3a7f/_apis/Identities/7a1eb01f-6b33-4e32-9f55-be1ca1bdeb7d",
+                "_links": {
+                    "avatar": {
+                        "href": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw"
+                    }
+                },
+                "id": "7a1eb01f-6b33-4e32-9f55-be1ca1bdeb7d",
+                "uniqueName": "alef.silva@superdigital.com.br",
+                "imageUrl": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw",
+                "descriptor": "aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw"
+            },
+            "variables": {
+                "openshift_enabled": {
+                    "value": "false"
+                }
+            },
+            "variableGroups": [
+                126
+            ],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": false,
+                        "isNotificationOn": false,
+                        "approver": {
+                            "displayName": "[global-platform]\\Production-Support",
+                            "url": "https://spsprodcus1.vssps.visualstudio.com/A1daf8918-7cb3-4770-8d8f-ed31c40d3a7f/_apis/Identities/8df156b5-ef22-41bf-b380-2e014971409e",
+                            "_links": {
+                                "avatar": {
+                                    "href": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/vssgp.Uy0xLTktMTU1MTM3NDI0NS0xMDc4MzE1MDAtMTU0OTE2NjgwLTI1OTM3NzQwMjEtMzk5NDIzNjA4NS0xLTM0NDg5Mzk5NDUtOTU3NDE3MDM3LTI4MzEyNjI4NzgtMjQ3NzE2NzgzNA"
+                                }
+                            },
+                            "id": "8df156b5-ef22-41bf-b380-2e014971409e",
+                            "uniqueName": "vstfs:///Classification/TeamProject/cc606d06-3b09-48d7-9a99-d9c5ee1334b5\\Production-Support",
+                            "imageUrl": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/vssgp.Uy0xLTktMTU1MTM3NDI0NS0xMDc4MzE1MDAtMTU0OTE2NjgwLTI1OTM3NzQwMjEtMzk5NDIzNjA4NS0xLTM0NDg5Mzk5NDUtOTU3NDE3MDM3LTI4MzEyNjI4NzgtMjQ3NzE2NzgzNA",
+                            "isContainer": true,
+                            "descriptor": "vssgp.Uy0xLTktMTU1MTM3NDI0NS0xMDc4MzE1MDAtMTU0OTE2NjgwLTI1OTM3NzQwMjEtMzk5NDIzNjA4NS0xLTM0NDg5Mzk5NDUtOTU3NDE3MDM3LTI4MzEyNjI4NzgtMjQ3NzE2NzgzNA"
+                        },
+                        "id": 14213
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": true,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "beforeGates"
+                }
+            },
+            "deployStep": {
+                "id": 14207
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 14212
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "afterSuccessfulGates"
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 30,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": "agentBasedDeployment",
+                    "name": "Docker",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "88356151-c0fd-4ac1-bf44-a38eebd5a44b",
+                            "version": "1.*",
+                            "name": "Push Image to Production",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "image_name": "$(service_name)",
+                                "image_tag": "$(Build.BuildId)",
+                                "oc_project": "$(oc_project)"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 74,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 2,
+                    "phaseType": "agentBasedDeployment",
+                    "name": "Helm",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "799fbe35-af35-4f2d-9e4a-2c10e12ae6b3",
+                            "version": "1.*",
+                            "name": "Helm Install",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "chart_path": "**/helm/$(service_name)",
+                                "env_tag": "$(env_tag)",
+                                "helm_values": "$(helm_values)",
+                                "namespace": "$(namespace)",
+                                "release_name": "$(service_name)"
+                            }
+                        },
+                        {
+                            "environment": {},
+                            "taskId": "52a1fb53-71f9-4bf7-a9d6-5c2a16896375",
+                            "version": "1.*",
+                            "name": "Update UserStory/Bug Status",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "workItemStateToChange": "Closed",
+                                "workItemCurrentState": "Ready for Release",
+                                "addTags": "IN-PROD",
+                                "removeTags": "IN-PRE-PROD\nIN-DEV",
+                                "enableBugUpdate": "true",
+                                "workItemStateBug": "",
+                                "bugCurrentState": "Closed",
+                                "addTagsBug": "IN-PROD",
+                                "removeTagsBug": "IN-PRE-PROD\nIN-DEV",
+                                "enableTaskUpdate": "",
+                                "workItemStateTask": "",
+                                "taskCurrentState": "",
+                                "addTagsTask": "",
+                                "removeTagsTask": "",
+                                "enableTagAll": "",
+                                "addTagsAll": "",
+                                "removeTagsAll": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": true,
+                "autoLinkWorkItems": true,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "PRE-PROD AKS PAGONXT",
+                    "conditionType": "environmentState",
+                    "value": "4"
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 1,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 0,
+                "url": "https://vsrm.dev.azure.com/Superdigital-HoldCo/cc606d06-3b09-48d7-9a99-d9c5ee1334b5/_apis/Release/releases/0",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {
+                "BoardsEnvironmentType": {
+                    "$type": "System.String",
+                    "$value": "production"
+                },
+                "LinkBoardsWorkItems": {
+                    "$type": "System.String",
+                    "$value": "True"
+                }
+            },
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [
+                {
+                    "releaseDefinitionId": 686,
+                    "definitionEnvironmentId": 3822,
+                    "triggerType": "rollbackRedeploy",
+                    "triggerContent": "{\"action\":\"LatestSuccessfulDeployment\",\"eventTypes\":[\"MS.TF.DistributedTask.DeploymentFailed\"]}"
+                }
+            ]
+        },
+        {
+            "id": 3823,
+            "name": "QA AKS PAGONXT",
+            "rank": 2,
+            "owner": {
+                "displayName": "Alef Carlos Nunes da Silva",
+                "url": "https://spsprodcus1.vssps.visualstudio.com/A1daf8918-7cb3-4770-8d8f-ed31c40d3a7f/_apis/Identities/7a1eb01f-6b33-4e32-9f55-be1ca1bdeb7d",
+                "_links": {
+                    "avatar": {
+                        "href": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw"
+                    }
+                },
+                "id": "7a1eb01f-6b33-4e32-9f55-be1ca1bdeb7d",
+                "uniqueName": "alef.silva@superdigital.com.br",
+                "imageUrl": "https://dev.azure.com/Superdigital-HoldCo/_apis/GraphProfile/MemberAvatars/aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw",
+                "descriptor": "aad.MjM0MDY5YzYtMmM2My03ZDg2LWI1OTktMzU0YmI5NmZjNGEw"
+            },
+            "variables": {},
+            "variableGroups": [
+                119
+            ],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 14214
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "beforeGates"
+                }
+            },
+            "deployStep": {
+                "id": 14215
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 14216
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "afterSuccessfulGates"
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 98,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": "agentBasedDeployment",
+                    "name": "Docker",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "e8c0bcc6-ad28-4404-ad2e-57725737a574",
+                            "version": "1.*",
+                            "name": "Push Image to Qa",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "image_name": "$(service_name)",
+                                "image_tag": "$(Build.BuildId)",
+                                "oc_project": "$(oc_project)"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "agentSpecification": null,
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 98,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 2,
+                    "phaseType": "agentBasedDeployment",
+                    "name": "Helm",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "58ed7f43-4161-4197-a8f3-361a055e600a",
+                            "version": "1.*",
+                            "name": "Helm Install",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": true,
+                            "continueOnError": true,
+                            "timeoutInMinutes": 0,
+                            "retryCountOnTaskFailure": 0,
+                            "definitionType": "metaTask",
+                            "overrideInputs": {},
+                            "condition": "succeededOrFailed()",
+                            "inputs": {
+                                "chart_path": "**/helm/$(service_name)",
+                                "env_tag": "$(env_tag)",
+                                "helm_values": "$(helm_values)",
+                                "namespace": "$(namespace)",
+                                "release_name": "$(service_name)"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": true,
+                "autoLinkWorkItems": true,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "DEV AKS PAGONXT",
+                    "conditionType": "environmentState",
+                    "value": "4"
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 1,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 0,
+                "url": "https://vsrm.dev.azure.com/Superdigital-HoldCo/cc606d06-3b09-48d7-9a99-d9c5ee1334b5/_apis/Release/releases/0",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {
+                "BoardsEnvironmentType": {
+                    "$type": "System.String",
+                    "$value": "unmapped"
+                },
+                "LinkBoardsWorkItems": {
+                    "$type": "System.String",
+                    "$value": "True"
+                }
+            },
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": []
+        }
+    ],
+    "artifacts": [
+        {
+            "alias": "_AppNameTemplate",
+            "isPrimary": true,
+            "isRetained": false,
+            "type": "Build",
+            "definitionReference": {
+                "project": {
+                    "id": "cc606d06-3b09-48d7-9a99-d9c5ee1334b5",
+                    "name": "global-platform"
+                },
+                "definition": {
+                    "id": "863",
+                    "name": "AppNameTemplate"
+                }
+            }
+        }
+    ],
+    "triggers": [
+        {
+            "artifactAlias": "_AppNameTemplate",
+            "triggerConditions": [
+                {
+                    "sourceBranch": "",
+                    "tags": [],
+                    "tagFilter": null,
+                    "useBuildDefinitionBranch": true,
+                    "createReleaseOnBuildTagging": false
+                }
+            ],
+            "triggerType": "artifactSource"
+        }
+    ],
+    "releaseNameFormat": "Release-$(rev:r)",
+    "tags": [],
+    "properties": {
+        "DefinitionCreationSource": {
+            "$type": "System.String",
+            "$value": "ReleaseClone"
+        },
+        "IntegrateBoardsWorkItems": {
+            "$type": "System.String",
+            "$value": "True"
+        },
+        "IntegrateJiraWorkItems": {
+            "$type": "System.String",
+            "$value": "false"
+        }
+    },
+    "name": "AppNameTemplate",
+    "path": "\\DomainTemplate\\SystemTemplate"
+}

@@ -1,0 +1,64 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "TODO: api title",
+    "description": "TODO: api description\r\n\r\nVersion: 5.6.3+90a6382eab701ced8ed6bf4a2c60ed760fd232db.\r\n\r\nThis Api is intended for private consumption over dedicated links.",
+    "version": "5.6.3.0"
+  },
+  "paths": {
+    "/v1/weatherforecast": {
+      "post": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "summary": "Summary example",
+        "operationId": "AddForecast",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AddWeatherForecastRequest"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddWeatherForecastRequest": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "summary": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "description": "Authorization header (please inform Bearer + your token)",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}

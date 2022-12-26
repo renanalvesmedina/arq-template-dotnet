@@ -1,0 +1,28 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: AppNameTemplate-api-client
+  tags:
+    - dotnet
+    - nuget
+    - webapiclient
+spec:
+  type: library
+  lifecycle: production
+  owner: TeamTemplate
+  system: SystemTemplate
+  subcomponentOf: AppNameTemplate
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: AppNameTemplate
+spec:
+  type: openapi
+  lifecycle: production
+  owner: TeamTemplate
+  system: SystemTemplate
+  definition:
+    $text: ./api-definition-internal.json

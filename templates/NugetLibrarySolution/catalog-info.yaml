@@ -1,0 +1,23 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: RepoNameTemplate-solution
+  tags:
+    - dotnet
+  annotations:
+    backstage.io/techdocs-ref: dir:..
+    dev.azure.com/project-repo: global-platform/RepoNameTemplate
+    sonarqube.org/project-key: RepoNameTemplate
+spec:
+  type: solution
+  lifecycle: production
+  owner: TeamTemplate
+  system: SystemTemplate
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: RepoNameTemplate-solution-data
+spec:
+  targets:
+    - /src/FullNamespace/catalog-info.yaml

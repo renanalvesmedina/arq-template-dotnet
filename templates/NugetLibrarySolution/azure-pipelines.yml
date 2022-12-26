@@ -1,0 +1,41 @@
+# Build Pipeline for NuGet Packages
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+    - README.md
+    - docs/*
+    - mkdocs.yml
+    - docs-pipelines.yml
+
+pool:
+  name: 'Azure Pipelines'
+  vmImage: 'ubuntu-22.04'
+
+variables:
+  projectName: '$(Build.Repository.Name)'
+  dotnetVersion: '6.0.x'
+  buildConfiguration: 'Release'
+  Agent.Source.Git.ShallowFetchDepth: 0
+
+resources:
+  repositories:
+    - repository: ssd.do.pipelines-templates
+      type: git
+      name: global-platform/ssd.do.pipelines-templates
+      ref: refs/heads/master
+
+steps:
+- template: template-compose/dotnet/buildTestAndPushToNuget.yml@ssd.do.pipelines-templates
+  parameters:
+    sonarQubeProjectKey: '$(projectName)'
+    sonarQubeProjectName: '$(projectName)'
+    buildConfiguration: '$(buildConfiguration)'
+    dotnetVersion: '$(dotnetVersion)'
+    projects: 'FullNamespace.sln'
+    nugetConfigFilePath: 'nuget.config'   
+    testProjects: '**/tests/**/*.csproj'
+    packagesToPack: '**/src/**/*.csproj'

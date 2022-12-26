@@ -1,0 +1,36 @@
+# Build Pipeline for NuGet Packages
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+    - src/libs/*
+
+pool:
+  name: 'Azure Pipelines'
+  vmImage: 'Ubuntu 18.04'
+
+variables:
+  projectName: '$(Build.Repository.Name)'
+  dotnetVersion: '6.0.x'
+  buildConfiguration: 'Release'
+  Agent.Source.Git.ShallowFetchDepth: 0
+
+resources:
+  repositories:
+    - repository: ssd.do.pipelines-templates
+      type: git
+      name: global-platform/ssd.do.pipelines-templates
+      ref: refs/heads/master
+
+steps:
+- template: template-compose/dotnet/buildTestAndPushToNugetWithoutScan.yml@ssd.do.pipelines-templates
+  parameters:
+    buildConfiguration: '$(buildConfiguration)'
+    dotnetVersion: '$(dotnetVersion)'
+    projects: 'src/libs/**/*.csproj'
+    nugetConfigFilePath: 'nuget.config'   
+    testProjects: '**/tests/**/*.csproj'
+    packagesToPack: 'src/libs/**/*.csproj'

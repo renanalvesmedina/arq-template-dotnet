@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Superdigital",
+  "classifications": [
+    "Common",
+    "Library Project",
+    "Nuget Library"
+  ],
+  "name": "Superdigital Nuget library solution",
+  "groupIdentity": "Superdigital.Library.Solution",
+  "identity": "Superdigital.Library.Solution",
+  "shortName": "sd-library",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "symbols": {
+    "namespace": {
+      "type": "parameter",
+      "isRequired": true,
+      "datatype": "string",
+      "fileRename": "ProjectName",
+      "description": "Project namespace"
+    },
+    "repository": {
+      "type": "parameter",
+      "isRequired": true,
+      "datatype": "string",
+      "description": "AzureDevops repository name",
+      "replaces": "RepoNameTemplate"
+    },
+    "system": {
+      "type": "parameter",
+      "isRequired": true,
+      "datatype": "string",
+      "description": "Backstage system",
+      "replaces": "SystemTemplate"
+    },
+    "team": {
+      "type": "parameter",
+      "isRequired": true,
+      "datatype": "string",
+      "description": "Backstage team",
+      "replaces": "TeamTemplate"
+    },
+    "FullNamespace": {
+      "type": "generated",
+      "generator": "join",
+      "replaces": "FullNamespace",
+      "fileRename": "FullNamespace",
+      "parameters": {
+        "symbols": [
+          {
+            "type": "const",
+            "value": "Super."
+          },
+          {
+            "type": "ref",
+            "value": "namespace"
+          }
+        ]
+      }
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "src/FullNamespace/FullNamespace.csproj"
+    }
+  ],
+  "postActions": [
+    {
+      "description": "Add projects to solution.",
+      "manualInstructions": [
+        {
+          "text": "Add projects manually"
+        }
+      ],
+      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+      "continueOnError": true
+    }
+  ]
+}

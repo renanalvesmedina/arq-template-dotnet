@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: RepoNameTemplate
+  tags:
+    - dotnet
+    - nuget
+spec:
+  type: library
+  lifecycle: production
+  owner: TeamTemplate
+  system: SystemTemplate
+  subcomponentOf: RepoNameTemplate-solution

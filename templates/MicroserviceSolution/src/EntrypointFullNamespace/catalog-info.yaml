@@ -1,0 +1,24 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: AppNameTemplate
+  tags:
+    - dotnet
+    - TemplateSelectedTemplate
+#if (IsWebApi)
+  links:
+    - url: https://AppNameTemplate.apps.dev.super.pagonxt.corp
+      title: WebApi Dev
+    - url: https://AppNameTemplate.apps.pre.super.pagonxt.corp
+      title: WebApi Pre
+#endif
+spec:
+  type: service
+  subcomponentOf: RepoNameTemplate-solution
+  lifecycle: production
+  owner: TeamTemplate
+  system: SystemTemplate
+#if (IsWebApi)
+  providesApis:
+    - AppNameTemplate
+#endif

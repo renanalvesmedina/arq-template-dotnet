@@ -1,0 +1,75 @@
+---
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+    - docs/*
+    - docs-pipelines.yml
+    - mkdocs.yml
+
+resources:
+  repositories:
+    - repository: ssd.do.pipelines-templates
+      type: git
+      name: global-platform/ssd.do.pipelines-templates
+      ref: refs/heads/master
+
+stages:
+  - stage: BUILD
+    displayName: 'Generate docs'
+
+    jobs:
+    - job: generate_docs
+
+      pool:
+        name: 'Azure Pipelines'
+        vmImage: 'Ubuntu 18.04'
+
+      steps:
+      - template: template-compose/techdocs/build.yml@ssd.do.pipelines-templates
+
+  - stage: SANTANDER
+    displayName: 'Push Docs'
+    dependsOn: BUILD
+
+    jobs:
+    - job: docker_push_docs_dev
+
+      pool:
+        name: 'Santander'
+
+      variables:
+      - group: 'Env dev_d1'
+
+      steps:
+      - template: git/git-checkout.yml@ssd.do.pipelines-templates
+        parameters:
+          checkout: none
+
+      - template: template-compose/techdocs/publish.yml@ssd.do.pipelines-templates
+        parameters:
+          name: RepoNameTemplate-solution
+          storagename: $(storagename)
+          storagekey: $(storagekey)
+
+    - job: docker_push_docs_pre
+
+      pool:
+        name: 'Santander_PREProd_Pool'
+
+      variables:
+      - group: 'Env pre_i1'
+
+      steps:
+      - template: git/git-checkout.yml@ssd.do.pipelines-templates
+        parameters:
+          checkout: none
+
+      - template: template-compose/techdocs/publish.yml@ssd.do.pipelines-templates
+        parameters:
+          name: RepoNameTemplate-solution
+          storagename: $(storagename)
+          storagekey: $(storagekey)

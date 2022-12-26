@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: AppNameTemplate
+  tags:
+    - dotnet
+    - TemplateSelectedTemplate
+  links:
+    - url: https://AppNameTemplate.coe.sysmap.com.br
+      title: WebApi
+
+spec:
+  type: service
+  subcomponentOf: SubcomponentOfSolutionTemplate-solution
+  lifecycle: production
+  owner: TeamTemplate
+  system: SystemTemplate
+  providesApis:
+    - AppNameTemplate
