@@ -6,8 +6,6 @@ metadata:
     - dotnet
   annotations:
     backstage.io/techdocs-ref: dir:..
-    dev.azure.com/project-repo: global-platform/RepoNameTemplate
-    sonarqube.org/project-key: RepoNameTemplate
 spec:
   type: solution
   lifecycle: production

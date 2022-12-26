@@ -5,20 +5,16 @@ metadata:
   tags:
     - dotnet
     - TemplateSelectedTemplate
-#if (IsWebApi)
+
   links:
-    - url: https://AppNameTemplate.apps.dev.super.pagonxt.corp
-      title: WebApi Dev
-    - url: https://AppNameTemplate.apps.pre.super.pagonxt.corp
-      title: WebApi Pre
-#endif
+    - url: https://AppNameTemplate.coe.sysmap.com.br
+      title: WebApi
+
 spec:
   type: service
   subcomponentOf: RepoNameTemplate-solution
   lifecycle: production
   owner: TeamTemplate
   system: SystemTemplate
-#if (IsWebApi)
   providesApis:
     - AppNameTemplate
-#endif

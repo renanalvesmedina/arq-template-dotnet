@@ -6,15 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-<!--#if (silverback) -->
-        <PackageReference Include="Super.Common.Silverback" Version="6.0.62" />
-<!--#endif -->>
-<!--#if (mongodb) -->
-        <PackageReference Include="Super.Common.Mongo" Version="6.0.60" />
-<!--#endif -->>
-<!--#if (redis) -->
-        <PackageReference Include="Super.Common.Redis" Version="6.0.60" />
-<!--#endif -->>
     </ItemGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-<!--#if (IsWebApi) -->
+
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
@@ -26,17 +26,7 @@
     <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="dotnet $(TargetDir)$(TargetFileName) generate-openapi-specs --output $(SolutionDir)\\src\\libs\\EntrypointFullNamespace.Client\\" />
     <Exec Command="$(NSwagExe_Net60) run $(SolutionDir)src\\libs\\EntrypointFullNamespace.Client\\config.nswag" />
   </Target>
-<!--#endif -->>
-<!--#if (IsHangfire) -->
-  <ItemGroup>
-    <PackageReference Include="Super.Common.HangfireServer" Version="6.0.28" />
-  </ItemGroup>
-<!--#endif -->>
-<!--#if (IsWorker) -->
-  <ItemGroup>
-    <PackageReference Include="Super.Common.Worker" Version="6.0.28" />
-  </ItemGroup>
-<!--#endif -->>
+
   <ItemGroup>
     <ProjectReference Include="..\FullNamespace.Infrastructure\FullNamespace.Infrastructure.csproj" />
   </ItemGroup>

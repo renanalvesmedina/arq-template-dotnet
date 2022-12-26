@@ -6,12 +6,9 @@ metadata:
     - dotnet
   annotations:
     backstage.io/techdocs-ref: dir:..
-    dev.azure.com/project-repo: global-platform/RepoNameTemplate
-    sonarqube.org/project-key: RepoNameTemplate
-    superdigital/domain: DomainTemplate
-    superdigital/domain-prefix: DomainPrefixTemplate
-    superdigital/k8s-namespace: K8sNamespaceTemplate
-    superdigital/fortify-app: FortifyAppTemplate
+    coe/domain: DomainTemplate
+    coe/domain-prefix: DomainPrefixTemplate
+    coe/k8s-namespace: K8sNamespaceTemplate
 spec:
   type: solution
   lifecycle: production
@@ -25,6 +22,3 @@ metadata:
 spec:
   targets:
     - /src/EntrypointFullNamespace/catalog-info.yaml
-#if (IsWebApi)
-    - /src/libs/EntrypointFullNamespace.Client/catalog-info.yaml
-#endif
